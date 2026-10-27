@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<!-- viewport-fit=cover : le site occupe tout l'écran du téléphone (zones système gérées en CSS) -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0F1E3D">
+<meta name="robots" content="noindex, nofollow"><!-- pas de référencement Google : c'est privé -->
+<title>Pour toi ♡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="progres" aria-hidden="true"></div>
+<!-- Les textes ne sont PAS ici : ils sont dans la zone « À PERSONNALISER » de script.js.
+     Chaque data-t="..." est rempli automatiquement par le JavaScript. -->
+<main>
+
+  <!-- ÉTAPE 1 : OUVERTURE -->
+  <section id="ouverture" class="screen">
+    <div class="etoiles" aria-hidden="true"></div>
+    <div class="coeur-anime" aria-hidden="true">♥</div>
+    <h1 data-t="ouverture.titre"></h1>
+    <p class="intro" data-t="ouverture.texte"></p>
+    <button id="btn-start" class="btn" type="button" data-t="ouverture.bouton"></button>
+  </section>
+
+  <div id="experience" hidden>
+
+    <!-- ÉTAPE 2 : SOUVENIRS -->
+    <section id="souvenirs">
+      <div class="bandeau" aria-hidden="true"></div>
+      <h2 data-t="souvenirs.titre"></h2>
+      <p class="centre indice" data-t="souvenirs.indice"></p>
+      <div id="album"></div>
+    </section>
+
+    <!-- INTERLUDE : le compteur de jours (supprimé automatiquement si tu laisses la date vide) -->
+    <section id="temps">
+      <p data-t="temps.avant"></p>
+      <div class="compteur"><span id="nombre">0</span></div>
+      <p class="unite" data-t="temps.unite"></p>
+      <p data-t="temps.apres"></p>
+      <div class="bandeau" aria-hidden="true"></div>
+    </section>
+
+    <!-- ÉTAPE 3 : LA LETTRE -->
+    <section id="lettre">
+      <h2 data-t="lettre.titre"></h2>
+      <article id="lettre-texte" class="lettre reveal"></article>
+      <p class="signature reveal" data-t="lettre.signature"></p>
+    </section>
+
+    <!-- ÉTAPE 4 : LES CŒURS -->
+    <section id="question">
+      <h2 data-t="question.titre"></h2>
+      <p class="centre" data-t="question.intro"></p>
+      <div id="coeurs" class="coeurs"></div>
+      <div id="reponse" aria-live="polite"></div>
+      <div class="centre"><button id="btn-continuer" class="btn" type="button" hidden data-t="question.continuer"></button></div>
+    </section>
+
+    <!-- ÉTAPE 5 : L'AUDIO -->
+    <section id="avant-audio">
+      <p class="grand" data-t="audio.intro1"></p>
+      <p class="centre" data-t="audio.intro2"></p>
+      <div id="zone-audio">
+        <div id="coeur-audio" aria-hidden="true">♥</div>
+        <button id="btn-audio" class="btn" type="button" data-t="audio.bouton"></button>
+        <div id="onde" class="onde" aria-hidden="true" hidden></div>
+        <div id="lecteur" class="lecteur" hidden>
+          <button id="btn-pp" class="pp" type="button" aria-label="Mettre en pause">❚❚</button>
+          <div class="col">
+            <input id="barre" type="range" min="0" max="1000" value="0" aria-label="Position dans le message audio">
+            <div class="temps"><span id="t-cour">0:00</span><span id="t-total">0:00</span></div>
+          </div>
+        </div>
+        <p id="audio-msg" class="erreur" role="alert" hidden></p>
+        <button id="btn-passer" class="btn doux" type="button" hidden data-t="audio.passer"></button>
+        <audio id="audio" preload="metadata" playsinline></audio>
+      </div>
+    </section>
+
+    <!-- ÉTAPE 6 : LA FIN (cachée tant que l'audio n'est pas terminé) -->
+    <section id="fin" hidden>
+      <div id="fin-photo"></div>
+      <p class="phrase" data-t="fin.phrase"></p>
+      <p class="merci" data-t="fin.merci"></p>
+    </section>
+
+  </div>
+</main>
+<script src="script.js"></script>
+</body>
+</html>

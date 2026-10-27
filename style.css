@@ -1,0 +1,214 @@
+/* ===== Couleurs et polices : modifiables ici ===== */
+:root{
+  --nuit:#0F1E3D; --nuit2:#1B3260; --bleu:#2F5DA8; --ciel:#9CC3F0; --givre:#E8F1FC; --blanc:#F7FAFF; --texte:#14213D;
+  --titre:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --corps:'Manrope',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --main:'Caveat','Segoe Script','Bradley Hand',cursive;
+  --ombre:0 20px 40px -14px rgba(15,30,61,.4);
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box;margin:0}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;overflow-x:clip;background:var(--nuit)}
+body{background:var(--blanc);color:var(--texte);font:1.0625rem/1.7 var(--corps);overflow-x:clip;
+  -webkit-tap-highlight-color:transparent;padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+img{max-width:100%}
+
+/* Sections : pleine largeur, coins arrondis qui se chevauchent pour un enchaînement fluide */
+section{position:relative;padding:5rem 1.4rem 6rem}
+section>*{position:relative;z-index:1;max-width:32rem;margin-left:auto;margin-right:auto}
+#experience>section+section{margin-top:-2rem;border-radius:2rem 2rem 0 0}
+#experience>section:not(#souvenirs):not(#avant-audio)::before{content:"✦  ♥  ✦";display:block;text-align:center;
+  color:var(--ciel);letter-spacing:.35em;margin-bottom:2.5rem}
+.centre{text-align:center}
+p.centre{margin-bottom:1.5rem}
+div.centre{margin-top:2rem}
+#souvenirs{background:linear-gradient(var(--blanc),var(--givre))}
+#lettre{background:radial-gradient(120% 55% at 50% 0,#2A4D8F,transparent 65%),var(--nuit);color:#EAF2FF}
+#question{background:var(--givre)}
+#avant-audio{background:var(--nuit);color:#EAF2FF}
+#fin{background:linear-gradient(var(--nuit),var(--bleu));color:#fff;text-align:center;overflow:hidden;
+  padding-bottom:calc(6rem + env(safe-area-inset-bottom))}
+
+/* Titres : les mots apparaissent un par un, le trait se dessine */
+h1,h2{font-family:var(--titre);font-weight:600;color:var(--nuit2);line-height:1.12;text-align:center}
+h1{font-size:clamp(2.4rem,10vw,3.4rem)}
+h2{font-size:clamp(2rem,8.5vw,2.7rem);margin-bottom:2rem}
+h2::after{content:"";display:block;width:84px;height:3px;border-radius:3px;margin:.9rem auto 0;
+  background:linear-gradient(90deg,var(--ciel),var(--bleu));transform:scaleX(0);transition:transform 1s var(--ease) .5s}
+h2.vu::after{transform:none}
+#lettre h1,#lettre h2,#fin h2,.screen h1{color:#fff}
+.mot{display:inline-block;opacity:0;transform:translateY(.55em);
+  transition:opacity .9s var(--ease),transform .9s var(--ease);
+  transition-delay:min(calc(var(--i) * var(--pas,70ms)),1.6s)}
+.vu .mot,.mot.vu{opacity:1;transform:none}
+.lettre .mot{--pas:22ms}
+
+/* Boutons (hauteur ≥ 56px : faciles à toucher au pouce) */
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;min-height:56px;
+  padding:.9rem 2.2rem;border:0;border-radius:999px;background:linear-gradient(135deg,#3F74C9,#2F5DA8 55%,#24468A);
+  color:#fff;font:600 1.05rem var(--corps);box-shadow:0 14px 28px -10px rgba(47,93,168,.8);cursor:pointer;
+  transition:transform .3s var(--ease),box-shadow .3s}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.35) 50%,transparent 65%);
+  transform:translateX(-130%);animation:brille 4s ease-in-out 1.5s infinite}
+@keyframes brille{0%,55%{transform:translateX(-130%)}100%{transform:translateX(130%)}}
+.btn:active{transform:scale(.96)}
+.btn.doux{background:transparent;border:2px solid var(--ciel);color:#fff;box-shadow:none}
+.btn.doux::after{display:none}
+button:focus-visible,input:focus-visible{outline:3px solid var(--ciel);outline-offset:3px}
+
+/* Barre de progression en haut de l'écran */
+#progres{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;height:3px;z-index:10;
+  background:linear-gradient(90deg,var(--ciel),var(--bleu));transform-origin:0 50%;transform:scaleX(0)}
+
+/* Étape 1 : ouverture */
+.screen{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;gap:1.4rem;overflow:hidden;color:#EAF2FF;
+  padding:calc(2rem + env(safe-area-inset-top)) 1.4rem calc(2rem + env(safe-area-inset-bottom));
+  background:radial-gradient(90% 50% at 15% 0,#1B3260,transparent 70%),var(--nuit);
+  transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.screen.sortie{opacity:0;transform:scale(1.06)}
+.screen>*{margin-top:0;margin-bottom:0;position:relative}
+.screen::before{content:"";position:absolute;width:130vw;height:130vw;left:-15vw;bottom:-75vw;
+  background:radial-gradient(closest-side,rgba(63,116,201,.55),transparent);animation:derive 12s ease-in-out infinite alternate}
+@keyframes derive{to{transform:translate3d(-8vw,-6vw,0) scale(1.15)}}
+.screen .intro{max-width:24rem;opacity:.92}
+.coeur-anime{font-size:4.4rem;line-height:1;color:var(--ciel);
+  animation:entree 1s var(--ease) both,bat 1.8s ease-in-out 1s infinite}
+.screen>.intro{animation:entree 1.2s var(--ease) 1s both}
+.screen>.btn{animation:entree 1.2s var(--ease) 1.5s both}
+@keyframes entree{from{opacity:0;transform:translateY(18px)}}
+@keyframes bat{0%,40%,100%{transform:scale(1)}10%{transform:scale(1.18)}25%{transform:scale(1.1)}}
+.etoiles{position:absolute!important;inset:0}
+.etoile{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.15;animation:scint 3s ease-in-out infinite}
+@keyframes scint{50%{opacity:.9}}
+
+/* Étape 2 : pile de photos qui se posent les unes sur les autres */
+.indice{color:var(--bleu);font-weight:600;animation:souffle 2.4s ease-in-out infinite}
+@keyframes souffle{50%{opacity:.4;transform:translateY(4px)}}
+.photo{position:relative;width:80%;aspect-ratio:4/5;margin:0 auto;border:6px solid #fff;border-radius:30px;overflow:hidden;
+  box-shadow:var(--ombre);cursor:pointer;
+  background:linear-gradient(110deg,#D5E4F8 30%,#EDF4FE 50%,#D5E4F8 70%) 0 0/200% 100%;animation:chargement 1.8s linear infinite;
+  clip-path:inset(10% 6% 10% 6% round 30px);opacity:0;transition:clip-path 1.3s var(--ease),opacity .9s var(--ease)}
+.photo.charge{animation:none}
+.photo.vu{clip-path:inset(-70px round 30px);opacity:1}
+.photo::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:var(--nuit);opacity:calc(var(--k,0) * .5)}
+#album .photo{position:sticky;top:calc(env(safe-area-inset-top) + 4.5rem);width:100%;aspect-ratio:auto;
+  height:min(70vh,34rem);height:min(70dvh,34rem);margin:0 0 38vh;margin-bottom:38dvh;
+  rotate:-1.5deg;scale:calc(1 - var(--k,0) * .07)}
+#album .photo:nth-child(even){rotate:1.5deg}
+#album .photo:last-child{margin-bottom:0}
+@keyframes chargement{to{background-position:-200% 0}}
+.photo img,.manque{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.photo img{scale:1.4;transform:translate3d(0,var(--py,0px),0);transition:scale 1.8s var(--ease);will-change:transform}
+.photo.vu img{scale:1.2}
+.manque{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3rem;color:#fff;font-size:3.4rem;
+  background:linear-gradient(160deg,#5C8DD6,#24468A)}
+.manque small{font:600 1rem var(--corps)}
+figcaption{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:4rem 1.3rem 1.3rem;color:#fff;
+  font:italic 600 1.45rem/1.3 var(--titre);background:linear-gradient(transparent,rgba(15,30,61,.82));
+  opacity:0;transform:translateY(20px);transition:opacity .9s var(--ease) .7s,transform .9s var(--ease) .7s}
+.photo.vu figcaption{opacity:1;transform:none}
+
+/* Rubans qui défilent en continu */
+.bandeau{overflow:hidden;white-space:nowrap;background:var(--nuit2);color:var(--ciel);padding:.8rem 0;font:italic 600 1.5rem var(--titre)}
+section>.bandeau{max-width:none;margin:3.5rem -1.4rem 0}
+#souvenirs>.bandeau{margin:-5rem -1.4rem 3.5rem}
+.piste{display:flex;width:max-content;animation:defile 30s linear infinite}
+.groupe{display:flex;flex:none}
+.groupe span{padding:0 1.3rem}
+@keyframes defile{to{transform:translateX(-50%)}}
+
+/* Interlude : compteur de jours */
+#temps{background:linear-gradient(170deg,var(--bleu),var(--nuit2));color:#fff;text-align:center;overflow:hidden}
+#temps p{font:500 1.55rem/1.4 var(--titre)}
+#temps .unite{font:500 2.4rem var(--main);color:#DCEAFB;margin:.2rem auto 1rem}
+.compteur{margin:1.2rem auto 0;font:600 clamp(5.5rem,30vw,8.5rem)/1 var(--titre);font-variant-numeric:tabular-nums}
+
+/* Halos de lumière doux pour habiller les grandes zones */
+#souvenirs::after,#question::after{content:"";position:absolute;width:80vw;height:80vw;border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(156,195,240,.4),transparent);right:-30vw;top:25%;z-index:0}
+#question::after{left:-30vw;right:auto;top:30%}
+
+/* Apparition douce générique */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.reveal.vu{opacity:1;transform:none}
+
+/* Étape 3 : lettre */
+.lettre{padding:2rem 1.5rem;border-radius:26px;background:rgba(255,255,255,.07);border:1px solid rgba(156,195,240,.28);
+  font:500 1.38rem/1.75 var(--titre)}
+.lettre p+p{margin-top:1.4rem}
+.signature{font:500 2.2rem var(--main);color:var(--ciel);text-align:right;margin-top:1.4rem}
+
+/* Étape 4 : cœurs */
+.coeurs{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-top:1.2rem;margin-bottom:0}
+.coeur{aspect-ratio:1;min-height:84px;border:0;border-radius:26px;background:#fff;color:var(--bleu);font-size:2.7rem;cursor:pointer;
+  box-shadow:0 14px 26px -12px rgba(47,93,168,.6);animation:flotte 4s ease-in-out infinite;
+  transition:opacity .5s,filter .5s,background .5s,color .5s,scale .3s var(--ease)}
+.coeur:nth-child(2){animation-delay:-1.3s}.coeur:nth-child(3){animation-delay:-2.6s}
+@keyframes flotte{50%{transform:translateY(-7px)}}
+.coeur:active{scale:.93}
+.coeur:disabled{opacity:.3;animation:none;filter:saturate(.4);cursor:default}
+.coeur.choisi{background:linear-gradient(135deg,var(--ciel),var(--bleu));color:#fff;animation:pop .8s var(--ease)}
+.message{margin-top:1.6rem;background:#fff;padding:1.6rem 1.4rem;border-radius:24px;box-shadow:var(--ombre);text-align:center;
+  font:600 1.6rem/1.35 var(--titre);color:var(--nuit2);animation:carte .9s var(--ease) both}
+@keyframes carte{from{opacity:0;transform:translateY(26px) scale(.95)}}
+@keyframes pop{0%{transform:scale(.8)}55%{transform:scale(1.1)}100%{transform:scale(1)}}
+.eclat{position:fixed;z-index:20;pointer-events:none;color:var(--ciel);font-size:1.2rem;animation:jaillit .95s ease-out forwards}
+@keyframes jaillit{from{opacity:1;transform:translate(-50%,-50%) scale(.4)}
+  to{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.1)}}
+
+/* Étape 5 : audio — fond uni, très peu de décor */
+#avant-audio{min-height:92vh;min-height:92dvh;display:flex;flex-direction:column;justify-content:center;text-align:center}
+#avant-audio>*{width:100%}
+.grand{font:500 1.85rem/1.35 var(--titre);color:#fff;margin-bottom:1.1rem}
+#zone-audio{margin-top:1.5rem;display:flex;flex-direction:column;align-items:center;gap:1.2rem}
+#coeur-audio{font-size:2.4rem;line-height:1;color:var(--ciel)}
+.joue #coeur-audio{animation:bat 1.4s ease-in-out infinite}
+.onde{display:flex;align-items:center;justify-content:center;gap:3px;height:44px;width:100%}
+.onde span{width:3px;height:100%;border-radius:3px;background:var(--ciel);transform:scaleY(.12);
+  animation:onde var(--d,1s) ease-in-out infinite alternate;animation-play-state:paused}
+.joue .onde span{animation-play-state:running}
+@keyframes onde{to{transform:scaleY(var(--h,.8))}}
+.lecteur{display:flex;align-items:center;gap:1rem;width:100%;padding:1rem 1.1rem;border-radius:28px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(156,195,240,.28)}
+.pp{position:relative;flex:none;width:64px;height:64px;border:0;border-radius:50%;background:#fff;color:var(--nuit);font-size:1.4rem;cursor:pointer}
+.pp::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--ciel);opacity:0}
+.joue .pp::after{animation:anneau 1.8s ease-out infinite}
+@keyframes anneau{from{opacity:.8;transform:scale(1)}to{opacity:0;transform:scale(1.55)}}
+.col{flex:1;min-width:0}
+.temps{display:flex;justify-content:space-between;font-size:.9rem;color:#CFE0F7;font-variant-numeric:tabular-nums}
+#barre{-webkit-appearance:none;appearance:none;width:100%;height:32px;margin:0;background:transparent}
+#barre::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:linear-gradient(90deg,var(--ciel) var(--p,0%),rgba(255,255,255,.22) var(--p,0%))}
+#barre::-moz-range-track{height:6px;border-radius:6px;background:rgba(255,255,255,.22)}
+#barre::-moz-range-progress{height:6px;border-radius:6px;background:var(--ciel)}
+#barre::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;margin-top:-8px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+#barre::-moz-range-thumb{width:22px;height:22px;border:0;border-radius:50%;background:#fff}
+.erreur{background:rgba(255,255,255,.08);border-left:4px solid var(--ciel);border-radius:10px;padding:1rem;text-align:left;font-size:1rem;color:#fff}
+
+/* Étape 6 : fin */
+#fin-photo{margin-bottom:2.5rem}
+#fin-photo .photo{aspect-ratio:5/4;width:80%;margin:0 auto;box-shadow:0 0 0 6px rgba(255,255,255,.14),0 30px 60px -20px rgba(0,0,0,.55)}
+.phrase{font:italic 600 2.15rem/1.25 var(--titre);color:#fff;margin-bottom:1.3rem}
+.merci{font:500 2.3rem/1.2 var(--main);color:#DCEAFB}
+#fin .phrase .mot{--pas:110ms}
+.pluie{position:absolute;inset:0;overflow:hidden;pointer-events:none;max-width:none!important}
+.pluie span{position:absolute;bottom:-2rem;color:#DCEAFB;opacity:0;animation:monte 5s ease-in forwards}
+@keyframes monte{0%{opacity:0;transform:translateY(0)}20%{opacity:.85}100%{opacity:0;transform:translateY(-80vh)}}
+
+/* Petits cœurs et étoiles qui flottent doucement ; ils s'effacent pendant l'écoute de l'audio */
+.ambiance{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden;transition:opacity 1.2s}
+.ambiance span{position:absolute;bottom:-2rem;color:var(--ciel);opacity:0;animation:flotter linear infinite}
+.ecoute .ambiance{opacity:0}
+@keyframes flotter{0%{opacity:0;transform:translate3d(0,0,0)}10%,90%{opacity:.3}100%{opacity:0;transform:translate3d(24px,-110vh,0)}}
+
+/* Tablettes et ordinateurs */
+@media (min-width:700px){body{font-size:1.15rem}section>*{max-width:36rem}#album .photo{width:24rem;margin-left:auto;margin-right:auto}}
+
+/* Si le téléphone demande moins d'animations : tout s'affiche directement, sans mouvement */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .mot,.reveal,.photo,figcaption{opacity:1!important;transform:none!important}
+  .photo{clip-path:none!important}.photo img{scale:1.1}
+  h2::after{transform:none}.ambiance,.etoiles{display:none}
+}
