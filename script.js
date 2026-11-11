@@ -65,8 +65,8 @@ const CONTENU = {
 
   // ÉTAPE 5 — Le message audio
   audio: {
-    intro1: "Et pour finir, j'avais envie que tu puisses entendre quelque chose directement de moi.",
-    intro2: "J'ai enregistré un petit message spécialement pour toi. \nAlors active le son.",
+    intro1: "Et pour finir, j'avais envie que tu puisses m'entendre.",
+    intro2: "J'ai enregistré un petit message pour toi. \nAlors active le son.",
     bouton: "Écouter mon message ♡",
     fichier: "assets/audio/mon-message.mp3",   // ← chemin de ton enregistrement
     erreur: "Oups, je n'arrive pas à lire l'enregistrement pour le moment. Vérifie ta connexion et réessaie. Si ça ne marche toujours pas, tu peux passer à la suite : je te le ferai écouter de vive voix. ♡",
